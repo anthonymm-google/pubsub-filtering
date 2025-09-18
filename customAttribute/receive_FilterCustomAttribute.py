@@ -8,6 +8,7 @@ def receive_messages_with_device_id(project_id: str, subscription_name: str, dev
 
     subscriber = pubsub_v1.SubscriberClient()
     subscription_path = subscriber.subscription_path(project_id, subscription_name)
+
     NUM_MESSAGES = 100 # Default and max is 1,000.  Change as needed.
 
     with subscriber:
@@ -25,6 +26,7 @@ def receive_messages_with_device_id(project_id: str, subscription_name: str, dev
                 subscriber.acknowledge(request={"subscription": subscription_path, "ack_ids": [received_message.ack_id]})
             else:
                 print(f"Received message with device_id {received_message.message.attributes.get('device_id')}, not acknowledging.")
+                subscriber.modify_ack_deadline(request={"subscription": subscription_path, "ack_ids": [received_message.ack_id], "ack_deadline_seconds": 0})
 
 if __name__ == "__main__":
     project_id = "amm-demo"  # Replace with your Google Cloud project ID

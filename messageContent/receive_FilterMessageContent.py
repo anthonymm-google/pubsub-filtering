@@ -20,17 +20,15 @@ def receive_messages_with_device_id(project_id: str, subscription_name: str, dev
             print("No messages received.")
             return
 
-        ack_ids = []
         for received_message in response.received_messages:
             message_data = json.loads(received_message.message.data.decode('utf-8'))
             
             if str(message_data.get("device_id")) == device_id:
                 print(f"Received and acknowledging message with device_id {device_id}: {received_message.message.data.decode('utf-8')}")
-                ack_ids.append(received_message.ack_id)
+                subscriber.acknowledge(request={"subscription": subscription_path, "ack_ids": [received_message.ack_id]})
             else:
-                print(f"Received message with device_id {message_data.get('device_id')}, not acknowledging.")
-        if ack_ids:
-            subscriber.acknowledge(request={"subscription": subscription_path, "ack_ids": ack_ids})
+                print(f"Received message with device_id {message_data.get('device_id')}, nacking.")
+                subscriber.modify_ack_deadline(request={"subscription": subscription_path, "ack_ids": [received_message.ack_id], "ack_deadline_seconds": 0})
 
 if __name__ == "__main__":
     project_id = "amm-demo"  # Replace with your Google Cloud project ID
@@ -42,4 +40,4 @@ if __name__ == "__main__":
 
     receive_messages_with_device_id(project_id, subscription_name, args.device_id)
 
-# Example usage:  python receive_FilterMessageContent.py --device_id=5
+# Example usage:  python messageContent/receive_FilterMessageContent.py --device_id=5

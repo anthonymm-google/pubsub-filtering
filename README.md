@@ -8,7 +8,7 @@ When building a Pub/Sub subscriber, it's common to only be interested in a subse
 
 1.  **Message Content Filtering**: Inspecting the body (`data`) of the message to decide whether to process it.  This approach can impact throughput and latency as message sizes grow.
 
-2.  **Custom Attribute Filtering**: Inspecting the message metadata (`attributes`) to make a processing decision.
+2.  **Custom Attribute Filtering**: Inspecting the message metadata (`attributes`) to make a processing decision. Also enables subscription filtering on the custom attribute values.
 
 ## Message Content Filtering
 `messageContent/publish.py`- publishes a message to a topic

@@ -6,7 +6,8 @@ def receive_messages(project_id: str, subscription_name: str):
 
     subscriber = pubsub_v1.SubscriberClient()
     subscription_path = subscriber.subscription_path(project_id, subscription_name)
-    NUM_MESSAGES = 10
+    
+    NUM_MESSAGES = 100 # Default and max is 1,000.  Change as needed.
 
     with subscriber:
         response = subscriber.pull(

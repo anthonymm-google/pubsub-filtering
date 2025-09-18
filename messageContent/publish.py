@@ -36,4 +36,4 @@ if __name__ == "__main__":
         build_id=args.build_id,
     )
 
-# Example usage:  python publish.py --asset_id=5 --device_id=5 --build_id=5
+# Example usage:  python messageContent/publish.py --asset_id=5 --device_id=5 --build_id=5

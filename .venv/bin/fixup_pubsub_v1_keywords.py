@@ -1,4 +1,4 @@
-#!/home/user/repos/pubsub/.venv/bin/python3
+#!/home/user/repos/pubsub-filtering/.venv/bin/python
 # -*- coding: utf-8 -*-
 # Copyright 2025 Google LLC
 #
